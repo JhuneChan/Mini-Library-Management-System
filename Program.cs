@@ -1,40 +1,76 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Principal;
 
 namespace miniLibrarySystem
 {
     public class Program
     {
+        // Store registered accounts
+        private static List<Account> accounts = new List<Account>();
+
         public static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Mini Library System!\b\n\n");
 
-Console.Write("1. Log In");
-Console.Write("2. Sign Up");
-Console.Write("3. Exit");
-int choice = Console.ReadLine();
+            while (true)
+            {
+                Console.WriteLine("1. Log In");
+                Console.WriteLine("2. Sign Up");
+                Console.WriteLine("3. Exit");
+                int choice;
+                if (!int.TryParse(Console.ReadLine(), out choice))
+                {
+                    Console.WriteLine("Invalid input. Please try again");
+                    continue;
+                }
 
-switch(choice)
-{
-case 1: 
-//Log in code use acc or user?
+                switch (choice)
+                {
+                    case 1:
+                        // Log in
+                        Console.Write("UserName: ");
+                        string loginName = Console.ReadLine();
+                        Console.Write("ID: ");
+                        string loginId = Console.ReadLine();
 
-break;
-case 2: 
-//Sign up code use acc or user? Will need verification method
-Console.Write("UserName: ");
-            string userName = Console.ReadLine();
-            Console.Write("ID: ");
-            string id = Console.ReadLine();
-            Account userAccount = new Account(userName, id); 
-break;
-case 3: 
-//Exit msg smth
-break;
-default: 
-Console.WriteLine("Invalid input. Please try again");
-break;
-}
+                        bool found = false;
+                        foreach (var acc in accounts)
+                        {
+                            if (acc.Verify(loginName, loginId))
+                            {
+                                Console.WriteLine("Login successful!");
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found)
+                        {
+                            Console.WriteLine("Login failed. Invalid credentials.");
+                        }
+                        break;
+
+                    case 2:
+                        // Sign up
+                        Console.Write("UserName: ");
+                        string userName = Console.ReadLine();
+                        Console.Write("ID: ");
+                        string id = Console.ReadLine();
+                        Account userAccount = new Account(userName, id);
+                        accounts.Add(userAccount);
+                        Console.WriteLine("Sign up successful!");
+                        break;
+
+                    case 3:
+                        // Exit
+                        Console.WriteLine("Exiting...");
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid input. Please try again");
+                        break;
+                }
+            }
         }
     }
 
