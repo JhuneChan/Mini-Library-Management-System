@@ -7,16 +7,34 @@ namespace miniLibrarySystem
     {
         public static void Main(string[] args)
         {
-            
-            
-
-            
             Console.WriteLine("Welcome to the Mini Library System!\b\n\n");
-            Console.Write("UserName: ");
+
+Console.Write("1. Log In");
+Console.Write("2. Sign Up");
+Console.Write("3. Exit");
+int choice = Console.ReadLine();
+
+switch(choice)
+{
+case 1: 
+//Log in code use acc or user?
+
+break;
+case 2: 
+//Sign up code use acc or user? Will need verification method
+Console.Write("UserName: ");
             string userName = Console.ReadLine();
             Console.Write("ID: ");
             string id = Console.ReadLine();
-            Account userAccount = new Account(userName, id);
+            Account userAccount = new Account(userName, id); 
+break;
+case 3: 
+//Exit msg smth
+break;
+default: 
+Console.WriteLine("Invalid input. Please try again");
+break;
+}
         }
     }
 
@@ -33,13 +51,13 @@ namespace miniLibrarySystem
         public void Verify()
         {
             Console.WriteLine("Verifying User...");
-            
+
         }
         public bool Verify(string inputName, string inputId)
         {
             return this.name == inputName && this.id == inputId;
         }
-        
+
 
     }
     class Account : User //inherits User
@@ -125,5 +143,5 @@ namespace miniLibrarySystem
             // Implementation for searching books
         }
     }
-    
+
 }
